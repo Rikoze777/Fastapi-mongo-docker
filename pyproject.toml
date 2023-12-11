@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "fastapi-mongo-docker"
+version = "0.1.0"
+description = ""
+authors = ["Rikoze777 <spawn00007@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pymongo = {version = "3.11", extras = ["srv"]}
+fastapi = "^0.104.1"
+environs = "^9.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
