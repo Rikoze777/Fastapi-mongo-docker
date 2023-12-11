@@ -10,6 +10,8 @@ python = "^3.10"
 pymongo = {version = "3.11", extras = ["srv"]}
 fastapi = "^0.104.1"
 environs = "^9.5.0"
+uvicorn = "^0.24.0"
+python-jose = "^3.3.0"
 
 
 [build-system]
