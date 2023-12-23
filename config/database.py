@@ -15,6 +15,12 @@ MONGO_DETAILS = f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@mongo:27017/{MONGO
 
 client = AsyncIOMotorClient(MONGO_DETAILS)
 
+try:
+    conn = client.server_info()
+    print(f'Connected to MongoDB {conn.get("version")}')
+except Exception:
+    print("Unable to connect to the MongoDB server.")
+
 database = client.get_database(MONGO_DB)
 
 users_collection = database.get_collection("users_collection")
