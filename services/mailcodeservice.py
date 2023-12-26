@@ -17,10 +17,10 @@ conf = ConnectionConfig(
     MAIL_PORT = 465,
     MAIL_SERVER = "smtp.yandex.ru",
     MAIL_FROM_NAME="mailserver",
-    MAIL_STARTTLS = True,
+    MAIL_STARTTLS = False,
     MAIL_SSL_TLS = True,
     USE_CREDENTIALS = True,
-    VALIDATE_CERTS = True
+    VALIDATE_CERTS = False,
 )
 
 fastmail = FastMail(conf)

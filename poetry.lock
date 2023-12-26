@@ -230,17 +230,24 @@ tests = ["pytest", "pytz", "simplejson"]
 
 [[package]]
 name = "motor"
-version = "2.5.1"
+version = "3.3.2"
 description = "Non-blocking MongoDB driver for Tornado or asyncio"
 category = "main"
 optional = false
-python-versions = ">=3.5.2"
+python-versions = ">=3.7"
 
 [package.dependencies]
-pymongo = ">=3.12,<4"
+pymongo = ">=4.5,<5"
 
 [package.extras]
-encryption = ["pymongo[encryption] (>=3.12,<4)"]
+aws = ["pymongo[aws] (>=4.5,<5)"]
+encryption = ["pymongo[encryption] (>=4.5,<5)"]
+gssapi = ["pymongo[gssapi] (>=4.5,<5)"]
+ocsp = ["pymongo[ocsp] (>=4.5,<5)"]
+snappy = ["pymongo[snappy] (>=4.5,<5)"]
+srv = ["pymongo[srv] (>=4.5,<5)"]
+test = ["pytest (>=7)", "mockupdb", "tornado (>=5)", "aiohttp (<3.8.6)", "motor"]
+zstd = ["pymongo[zstd] (>=4.5,<5)"]
 
 [[package]]
 name = "packaging"
@@ -299,20 +306,22 @@ python-dotenv = ">=0.21.0"
 
 [[package]]
 name = "pymongo"
-version = "3.12.3"
+version = "4.6.1"
 description = "Python driver for MongoDB <http://www.mongodb.org>"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7"
+
+[package.dependencies]
+dnspython = ">=1.16.0,<3.0.0"
 
 [package.extras]
 aws = ["pymongo-auth-aws (<2.0.0)"]
-encryption = ["pymongocrypt (>=1.1.0,<2.0.0)"]
-gssapi = ["pykerberos"]
-ocsp = ["pyopenssl (>=17.2.0)", "requests (<3.0.0)", "service-identity (>=18.1.0)", "certifi"]
+encryption = ["pymongo", "pymongocrypt (>=1.6.0,<2.0.0)", "certifi"]
+gssapi = ["pykerberos", "winkerberos (>=0.5.0)"]
+ocsp = ["pyopenssl (>=17.2.0)", "requests (<3.0.0)", "cryptography (>=2.5)", "service-identity (>=18.1.0)", "certifi"]
 snappy = ["python-snappy"]
-srv = ["dnspython (>=1.16.0,<1.17.0)"]
-tls = ["ipaddress"]
+test = ["pytest (>=7)"]
 zstd = ["zstandard"]
 
 [[package]]
@@ -412,7 +421,7 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "51e31e9685244ee60b7227d0b7548f7c04519db1d30ef68349491a58b5a8759a"
+content-hash = "d9b73a5626308cf51807cfa1cbb5c5bce492d646123b9cfe585166d040feecff"
 
 [metadata.files]
 aiosmtplib = []

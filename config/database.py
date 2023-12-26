@@ -1,6 +1,6 @@
-from motor.motor_asyncio import AsyncIOMotorClient
-from bson.objectid import ObjectId
-from schema.schemas import individual_user
+from typing import Generator
+from pymongo import MongoClient
+from pymongo.collection import Collection
 from environs import Env
 
 
@@ -11,33 +11,15 @@ MONGO_USERNAME = env.str("MONGO_USERNAME")
 MONGO_PASSWORD = env.str("MONGO_PASSWORD")
 MONGO_DB = env.str("MONGO_DB")
 
-MONGO_DETAILS = f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@mongo:27017/{MONGO_DB}"
+MONGO_DETAILS = f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@0.0.0.0:27017/{MONGO_DB}"
 
-client = AsyncIOMotorClient(MONGO_DETAILS)
-
-try:
-    conn = client.server_info()
-    print(f'Connected to MongoDB {conn.get("version")}')
-except Exception:
-    print("Unable to connect to the MongoDB server.")
-
-database = client.get_database(MONGO_DB)
-
-users_collection = database.get_collection("users_collection")
+client = MongoClient(MONGO_DETAILS)
+database = client[MONGO_DB]
+users_collection: Collection = database["users"]
 
 
-async def add_user(user_data: dict) -> dict:
-    user = await users_collection.insert_one(user_data)
-    new_user = await users_collection.find_one({"_id": user.inserted_id})
-    return individual_user(new_user)
-
-
-async def delete_user(id: str):
-    student = await users_collection.find_one({"_id": ObjectId(id)})
-    if student:
-        await users_collection.delete_one({"_id": ObjectId(id)})
-        return True
-
-
-def get_user_by_email(email: str):
-    return users_collection.find_one({"email": email})
+def get_db() -> Generator:
+    try:
+        yield users_collection
+    finally:
+        pass
