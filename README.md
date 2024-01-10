@@ -10,6 +10,9 @@
     - MAIL_FROM='example@yandex.ru' `email`
     - MAIL_USERNAME='example@yandex.ru' `email name`
     - MAIL_PASSWORD='password' `email password`
+    - MONGO_IP='0.0.0.0' `0.0.0.0 for local and 'mongo' for docker`
+
+Check [example](env_example) 
 
 2. Введите команду:
 ```

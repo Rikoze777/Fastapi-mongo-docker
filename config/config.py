@@ -9,7 +9,8 @@ class Config(BaseSettings):
     MAIL_FROM: str
     MAIL_USERNAME: str
     MAIL_PASSWORD: str
-    MONGO_DETAILS: str 
+    MONGO_DETAILS: str
+    MONGO_IP: str
 
     class Config:
         env_file = "../.env"
