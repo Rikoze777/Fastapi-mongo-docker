@@ -27,7 +27,7 @@ async def get_current_user(token: str = Security(oauth2_scheme), db: AsyncIOMoto
     except JWTError:
         raise credentials_exception
 
-    user = await db["users_collection"].find_one({"email": email})
+    user = db["users_collection"].find_one({"email": email})
     if user is None:
         raise credentials_exception
 

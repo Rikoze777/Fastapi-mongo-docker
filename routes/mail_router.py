@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from fastapi.responses import JSONResponse
-from models.user import EmailCode, User, JWT
+from models.user import User
+from services.jwt import create_jwt_token
 from services.mailcodeservice import generate_code, send_email
 from motor.motor_asyncio import AsyncIOMotorClient
 import datetime
@@ -58,4 +59,9 @@ async def check_code(
     if user["expiration"] < datetime.datetime.now():
         raise HTTPException(status_code=422, detail="Code has expired. Please request a new one.")
 
-    return {"message": "Code is valid."}
+    jwt_token, jwt_expiration = create_jwt_token({"sub": email})
+    users_collection.update_one(
+        {"email": email},
+        {"$set": {"jwt": jwt_token, "jwt_expiration": jwt_expiration}}
+    )
+    return {"message": "Code is valid.", "token": jwt_token}

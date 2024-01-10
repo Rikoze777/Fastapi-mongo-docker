@@ -17,5 +17,5 @@ Check [example](env_example)
 
 2. Введите команду:
 ```
-docker compose up
+docker compose up -d
 ```
