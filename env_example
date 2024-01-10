@@ -1,0 +1,8 @@
+MONGO_USERNAME='Adminer' #db password
+MONGO_PASSWORD='12345' #db password
+MONGO_DB='mailer' #db name
+MAIL_FROM='email@yandex.ru' #your email
+MAIL_PASSWORD='jqweqweqeqweqweqweqweqwe' #mail smtp password
+MONGO_IP='0.0.0.0' #0.0.0.0 for local and 'mongo' for docker
+SECRET_KEY = "your_secret_key"
+ALGORITHM = "HS256"

@@ -1,24 +1,24 @@
-import motor.motor_asyncio
-from bson.objectid import ObjectId
-from schema.schemas import individual_user
-
-MONGO_DETAILS = "mongodb://localhost:27017"
-
-client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
-
-database = client.users_db
-
-user_collection = database.get_collection("users_collection")
+from typing import Generator
+from pymongo import MongoClient
+from pymongo.collection import Collection
+from config.config import Config
 
 
-async def add_user(student_data: dict) -> dict:
-    user = await user_collection.insert_one(student_data)
-    new_user = await user_collection.find_one({"_id": user.inserted_id})
-    return individual_user(new_user)
+config = Config()
+MONGO_USERNAME = config.MONGO_USERNAME
+MONGO_PASSWORD = config.MONGO_PASSWORD
+MONGO_DB = config.MONGO_DB
+MONGO_IP = config.MONGO_IP
+
+MONGO_DETAILS = f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@{MONGO_IP}:27017/{MONGO_DB}"
+
+client = MongoClient(MONGO_DETAILS)
+database = client[MONGO_DB]
+users_collection: Collection = database["users"]
 
 
-async def delete_user(id: str):
-    student = await user_collection.find_one({"_id": ObjectId(id)})
-    if student:
-        await user_collection.delete_one({"_id": ObjectId(id)})
-        return True
+def get_db() -> Generator:
+    try:
+        yield users_collection
+    finally:
+        pass
