@@ -421,7 +421,7 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "d9b73a5626308cf51807cfa1cbb5c5bce492d646123b9cfe585166d040feecff"
+content-hash = "dcb99556002cdbf5d9be36d4ecb9adf779ec58a1a223f21c4bc5b13a4f372637"
 
 [metadata.files]
 aiosmtplib = []

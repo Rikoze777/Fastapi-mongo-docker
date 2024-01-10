@@ -1,17 +1,15 @@
 import random
-from environs import Env
-from fastapi_mail import ConnectionConfig, FastMail, MessageSchema
+from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
+from config.config import Config
 
+config = Config()
 
-env = Env()
-env.read_env()
+MAIL_FROM = config.MAIL_FROM
+MAIL_USERNAME = config.MAIL_USERNAME
+MAIL_PASSWORD = config.MAIL_PASSWORD
 
-MAIL_FROM = env.str("MAIL_FROM")
-MAIL_USERNAME = env.str("MAIL_USERNAME")
-MAIL_PASSWORD = env.str("MAIL_PASSWORD")
-
-conf = ConnectionConfig(
-    MAIL_USERNAME = MAIL_USERNAME,
+mail_conf = ConnectionConfig(
+    # MAIL_USERNAME = MAIL_USERNAME,
     MAIL_PASSWORD = MAIL_PASSWORD,
     MAIL_FROM = MAIL_FROM,
     MAIL_PORT = 465,
@@ -23,7 +21,7 @@ conf = ConnectionConfig(
     VALIDATE_CERTS = False,
 )
 
-fastmail = FastMail(conf)
+fastmail = FastMail(mail_conf)
 
 
 async def send_email(email: str, code: str):
@@ -31,7 +29,7 @@ async def send_email(email: str, code: str):
         subject="Your Verification Code",
         recipients=[email],
         body=f"Your verification code is: {code}",
-        subtype="html"
+        subtype=MessageType.html
     )
     await fastmail.send_message(message)
 

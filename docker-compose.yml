@@ -14,9 +14,9 @@ services:
   mongo:
     image: mongo:5.0
     restart: unless-stopped
-    command: mongos --configdb /data/configdb --port 27017 --bind_ip 0.0.0.0
+    command: mongos --configdb /data/mongo --port 27019 --bind_ip 0.0.0.0
     ports:
-      - "27017:27017"
+      - "27019:27019"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
