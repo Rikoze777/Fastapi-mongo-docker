@@ -8,9 +8,10 @@
     - MONGO_PASSWORD='12345' `MongoDB db password`
     - MONGO_DB='mailer' `MongoDB db name`
     - MAIL_FROM='example@yandex.ru' `email`
-    - MAIL_USERNAME='example@yandex.ru' `email name`
     - MAIL_PASSWORD='password' `email password`
     - MONGO_IP='0.0.0.0' `0.0.0.0 for local and 'mongo' for docker`
+    - SECRET_KEY = "your_secret_key"
+    - ALGORITHM = "HS256"
 
 Check [example](env_example) 
 

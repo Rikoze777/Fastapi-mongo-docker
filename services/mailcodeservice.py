@@ -1,37 +1,22 @@
 import random
-from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
+import smtplib
 from config.config import Config
+
 
 config = Config()
 
 MAIL_FROM = config.MAIL_FROM
-MAIL_USERNAME = config.MAIL_USERNAME
 MAIL_PASSWORD = config.MAIL_PASSWORD
 
-mail_conf = ConnectionConfig(
-    # MAIL_USERNAME = MAIL_USERNAME,
-    MAIL_PASSWORD = MAIL_PASSWORD,
-    MAIL_FROM = MAIL_FROM,
-    MAIL_PORT = 465,
-    MAIL_SERVER = "smtp.yandex.ru",
-    MAIL_FROM_NAME="mailserver",
-    MAIL_STARTTLS = False,
-    MAIL_SSL_TLS = True,
-    USE_CREDENTIALS = True,
-    VALIDATE_CERTS = False,
-)
 
-fastmail = FastMail(mail_conf)
-
-
-async def send_email(email: str, code: str):
-    message = MessageSchema(
-        subject="Your Verification Code",
-        recipients=[email],
-        body=f"Your verification code is: {code}",
-        subtype=MessageType.html
-    )
-    await fastmail.send_message(message)
+def send_email(mail_to, code):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(MAIL_FROM, MAIL_PASSWORD)
+    message = 'Subject: {}\n\n{}'.format('Code', code)
+    server.sendmail(MAIL_FROM, mail_to, message)
+    print('Email sent successfully')
+    server.quit()
 
 
 def generate_code():
