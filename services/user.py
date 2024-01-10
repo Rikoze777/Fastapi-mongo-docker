@@ -1,8 +1,7 @@
 from fastapi import Depends, HTTPException, Security
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError
+from jose import jwt, JWTError
 from motor.motor_asyncio import AsyncIOMotorClient
-from config.config import SECRET_KEY, ALGORITHM
 from config.config import Config
 from config.database import get_db
 
@@ -20,14 +19,14 @@ async def get_current_user(token: str = Security(oauth2_scheme), db: AsyncIOMoto
     )
 
     try:
-        payload = JWTError.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, config.SECRET_KEY, algorithms=[config.ALGORITHM])
         email: str = payload.get("sub")
         if email is None:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
 
-    user = await db["users_collection"].find_one({"email": email})
+    user = db["users_collection"].find_one({"email": email})
     if user is None:
         raise credentials_exception
 
